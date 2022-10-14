@@ -67,7 +67,6 @@ var (
 		"config.my-cnf",
 		"Path to .my.cnf file to read MySQL credentials from.",
 	).Default(path.Join(os.Getenv("HOME"), ".my.cnf")).String()
-
 	exporterLockTimeout = kingpin.Flag(
 		"exporter.lock_wait_timeout",
 		"Set a lock_wait_timeout (in seconds) on the connection to avoid long metadata locking.",
@@ -120,7 +119,13 @@ var (
 		"tls.insecure-skip-verify",
 		"Ignore certificate and server verification when using a tls connection.",
 	).Bool()
+
 	dsn string
+
+	mysqlUrl = kingpin.Flag(
+		"mysql.url",
+		"for identify exporter monitor instance",
+	).String()
 )
 
 // SQL queries and parameters.
@@ -504,6 +509,10 @@ func main() {
 	dsnParams := []string{fmt.Sprintf(timeoutParam, *exporterLockTimeout)}
 	if *exporterLogSlowFilter {
 		dsnParams = append(dsnParams, sessionSettingsParam)
+	}
+
+	// stub
+	if *mysqlUrl != "" {
 	}
 
 	// The parseMycnf function will set the TLS config in case certificates are being defined in
