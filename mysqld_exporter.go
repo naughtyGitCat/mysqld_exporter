@@ -122,8 +122,9 @@ var (
 
 	dsn string
 
-	mysqlUrl = kingpin.Flag(
-		"mysql.url",
+	// only use for identify instance
+	mysqlUri = kingpin.Flag(
+		"mysql.uri",
 		"for identify exporter monitor instance",
 	).String()
 )
@@ -512,7 +513,7 @@ func main() {
 	}
 
 	// stub
-	if *mysqlUrl != "" {
+	if *mysqlUri != "" {
 	}
 
 	// The parseMycnf function will set the TLS config in case certificates are being defined in
